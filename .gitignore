@@ -1,0 +1,12 @@
+# Ignorar tudo
+*
+
+# Permitir que os diretórios não sejam ignorados (o comando para ignorar tudo impede que um arquivo dentro
+# de um subdiretório seja não-ignorado)
+!*/
+
+# Não ignorar apenas os arquivos de implementação do APS e o gitignore
+!.gitignore
+!Implementacoes/aps.ipynb
+!Referencias/*
+Referencias/*Zone.Identifier
