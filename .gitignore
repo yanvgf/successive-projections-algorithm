@@ -8,3 +8,4 @@
 # Não ignorar apenas os arquivos de implementação do APS e o gitignore
 !.gitignore
 !Implementacoes/aps.ipynb
+!Arquivos/corn.mat
