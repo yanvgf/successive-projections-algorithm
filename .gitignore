@@ -7,12 +7,12 @@
 
 # Não ignorar apenas os arquivos de implementação do APS e o gitignore
 !.gitignore
-!Implementacoes/aps.ipynb
-!Implementacoes/elm.ipynb
-!Implementacoes/elm.py
-!Arquivos/corn.mat
+!implementacoes/aps.ipynb
+!implementacoes/elm.ipynb
+!implementacoes/elm.py
+!arquivos/corn.mat
 !requirements.txt
-Implementacoes/aBugsLife
-!Implementacoes/aps_utils.py
-!Imagens/*
-Implementacoes/Antigas
+implementacoes/aBugsLife
+!implementacoes/aps_utils.py
+!imagens/*
+implementacoes/Antigas
