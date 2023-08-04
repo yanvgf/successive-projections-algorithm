@@ -84,3 +84,56 @@ def test_elm(x, Z, W):
     return(yhat)
 
 
+def train_pruned_elm(y, H, SEL, learning='lstsq'):
+    """Retreina rede ELM após a poda
+
+    Input: 
+            y --> matriz com os dados de saída do treinamento \n
+            H --> matriz da camada escondida da rede original \n
+            SEL --> vetor com neurônios selecionados \n
+            learning (default='lstsq') --> 'hebb', se deseja-se usar aprendizado hebbiano, ou 'lstsq', se \
+                    deseja-se utilizar mínimos quadrados \n
+
+    Output: 
+            H_pruned --> matriz de projeção dos dados na camada intermediária após poda \n
+            W --> matriz de pesos da camada de saída após poda
+    """
+    
+    # Poda neurônios que não foram selecionados
+    H_pruned = H[:,SEL]
+    
+    # Obtém nova matriz W
+    if learning=='hebb':
+        W_pruned = H_pruned.T @ y
+    if learning=='lstsq':
+        W_pruned = np.linalg.pinv(H_pruned) @ y
+        
+    return(H_pruned, W_pruned)
+    
+
+
+def test_pruned_elm(x, Z, W_pruned, SEL):
+    """Obtém saída de rede ELM podada
+
+    Input: 
+            x --> matriz com os dados de entrada do teste \n
+            Z --> matriz de pesos da rede original (camada de entrada) \n
+            W_pruned --> matriz de pesos da rede podada (camada de saída) \n
+            SEL --> vetor com neurônios selecionados \n
+    Output:
+            yhat_pruned --> saída do modelo
+    """
+        
+    # Adiciona coluna do termo de polarização em X
+    x_aug = np.c_[x, np.ones(x.shape[0])]
+        
+    # Elimina sinapses de Z referentes aos neurônios podados
+    Z_pruned = Z[:,SEL]
+    
+    # Obtém projeção na camada escondida podada
+    H_pruned = np.tanh(x_aug @ Z_pruned)
+    
+    # Obtém saída do modelo
+    yhat_pruned = H_pruned @ W_pruned
+    
+    return(yhat_pruned)
