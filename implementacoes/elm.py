@@ -137,3 +137,27 @@ def test_pruned_elm(x, Z, W_pruned, SEL):
     yhat_pruned = H_pruned @ W_pruned
     
     return(yhat_pruned)
+
+
+def get_crosstalk(x, y):
+    """Calcula o crosstalk de modelo hebbiano
+
+    Input:
+            x --> matriz com dados de entrada do treinamento\n
+            y --> matriz com dados de saída do treinamento\n
+            
+    Output:
+            crosstalk_series --> crosstalk para cada amostra de treinamento
+    """
+
+    # O crosstalk é o erro do modelo hebbiano, então deve-se calculá-lo como
+    # uma série de erros para cada amostra de treinamento
+    crosstalk_series = np.zeros(x.shape[0])
+    for i in range(x.shape[0]):
+        crosstalk_i = 0
+        for j in range(x.shape[0]):
+            if i != j:
+                crosstalk_i += (x[i] @ x[j].T) * y[j] 
+        crosstalk_series[i] = crosstalk_i
+        
+    return(crosstalk_series)
