@@ -1,5 +1,5 @@
 import numpy as np
-
+from sklearn.preprocessing import normalize
 
 def normalize_by_train(train, test):
     """Normaliza dados entre -1 e 1 baseado nos dados de treinamento.
@@ -50,11 +50,14 @@ def train_elm(x, y, neurons, learning='lstsq'):
     # H = psi(XZ), sendo psi a função de ativação dos neurônios da camada escondida
     H = np.tanh(x_aug @ Z)
     
-    # No aprendizado hebbiano, W = X^tY
     if learning=='hebb':
+        # Para o crosstalk ser exatamente igual ao erro de treinamento, as linhas
+        # da matriz de entrada devem ser normalizadas 
+        H = normalize(H, norm='l2')
+        # No aprendizado hebbiano, W = X^tY
         W = H.T @ y 
-    # Na solução de mínimos quadrados, W = X^+Y, sendo X^+ a pseoduinversa de X
     elif learning=='lstsq':
+		# Na solução de mínimos quadrados, W = X^+Y, sendo X^+ a pseoduinversa de X
         W = np.linalg.pinv(H) @ y
     
     return Z, H, W
