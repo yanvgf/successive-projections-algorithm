@@ -16,10 +16,16 @@ def normalize_by_train(train, test):
             (train_norm, test_norm) --> matrizes de treino e teste normalizadas
     """
     
-    # Função para normalização baseado nos parâmetros do treinamento
-    normalize = lambda x, train: 2*(x - np.min(train, axis=0))/(np.max(train, axis=0) - np.min(train, axis=0)) - 1
+    # Corrige problema de coluna com valores constantes
+    min_max_difference = np.where((np.max(train, axis=0) - np.min(train, axis=0))==0,
+                                  1,
+                                  (np.max(train, axis=0) - np.min(train, axis=0)))
     
+    # Função para normalização baseado nos parâmetros do treinamento 
+    normalize = lambda x, train: 2*(x - np.min(train, axis=0))/min_max_difference - 1
+        
     return normalize(train, train), normalize(test, train)
+        
 
 
 
