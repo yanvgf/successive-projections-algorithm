@@ -66,10 +66,12 @@ def standardize_data(X):
 
     X_standardized = X.copy()
 
+    # Corrige problema quando desvio-padrão de coluna é 0
+    cols_std = np.where(np.std(X, axis=0)==0, 1, np.std(X, axis=0))
+    
     # Realiza-se a padronização em cada coluna de X (subtrai a média e divide pelo desvio-padrão)
-    for col in range(X.shape[1]):
-        X_standardized[:, col] = (X[:, col] - np.mean(X[:, col], axis=0)) / np.std(X[:, col], axis=0)
-
+    X_standardized = (X - np.mean(X, axis=0)) / cols_std
+    
     return(X_standardized)
 
 
