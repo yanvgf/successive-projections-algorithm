@@ -7,7 +7,7 @@ Este repositório contém a implementação do algoritmo das projeções sucessi
 Utilize os pacotes indicados no arquivo requirements.txt para executar os códigos. Para usuários do conda, basta criar um novo ambiente a partir do arquivo:
 
 ```bash
-$ conda create --name <env> --file <this file>
+$ conda create --name spa --file requirements.txt
 ``` 
 
 ## Autor
