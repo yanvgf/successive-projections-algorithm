@@ -203,12 +203,13 @@ def spa(xcal, ycal, xval=None, yval=None, M_min=1, M_max=None, plot=True):
         if xval is None:
             # O número máximo de variáveis selecionadas é N-1, pois cada projeção tira
             # um grau de liberdade dos vetores
-            M_max = min(N, K)
-        else:
+            #
             # Caso não seja definido um conjunto de validação, o número máximo de variáveis
             # selecionadas é N-1, pois uma amostra é reservada para a validação cruzada com LOO
-            M_max = min(N - 1, K)
-    assert (M_max < min(N, K)), "Parâmetro M_max inválido: o número máximo de variáveis selecionadas é N"
+            M_max = min(N-2, K)
+        else:
+            M_max = min(N-1, K)
+    assert (M_max <= min(N-1, K)), "Parâmetro M_max inválido: o número máximo de variáveis selecionadas é N"
     
     # Tratamento dos dados (todas as colunas ficam com média 0 e desvio-padrão 1)
     xcal_standardized = standardize_data(xcal)
